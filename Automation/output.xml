@@ -1,1665 +1,591 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 3.2.1 (Python 3.8.5 on win32)" generated="20200730 23:09:11.375" rpa="false">
-<suite id="s1" name="Tc1" source="C:\Users\ncbar\PycharmProjects\Automation\TestCases\tc1.robot">
-<test id="s1-t1" name="LandingOnLogInPageTask">
-<kw name="Open Browser" library="SeleniumLibrary">
-<doc>Opens a new browser instance to the optional ``url``.</doc>
+<robot generator="Robot 3.2.1 (Python 3.8.5 on win32)" generated="20200731 21:44:10.274" rpa="false">
+<suite id="s1" name="Tc4" source="C:\Users\ncbar\PycharmProjects\Automation\TestCases\tc4.robot">
+<test id="s1-t1" name="Validations check for wrong credential">
+<kw name="Create List" library="BuiltIn">
+<doc>Returns a list containing given items.</doc>
 <arguments>
-<arg>${URL}</arg>
-<arg>Chrome</arg>
+<arg>mnop@gmail.com</arg>
+<arg>password123</arg>
 </arguments>
-<msg timestamp="20200730 23:09:11.532" level="INFO">Opening browser 'Chrome' to base url 'https://demo.realworld.io/'.</msg>
-<status status="PASS" starttime="20200730 23:09:11.532" endtime="20200730 23:09:18.188"></status>
+<assign>
+<var>${AUTH}</var>
+</assign>
+<msg timestamp="20200731 21:44:10.411" level="INFO">${AUTH} = ['mnop@gmail.com', 'password123']</msg>
+<status status="PASS" starttime="20200731 21:44:10.411" endtime="20200731 21:44:10.411"></status>
 </kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
 <arguments>
-<arg>xpath://*[contains(text(), "Sign in")]</arg>
+<arg>wrongcredential</arg>
+<arg>${BASE_URL}</arg>
+<arg>auth=${AUTH}</arg>
 </arguments>
-<msg timestamp="20200730 23:09:18.189" level="INFO">Clicking element 'xpath://*[contains(text(), "Sign in")]'.</msg>
-<status status="PASS" starttime="20200730 23:09:18.189" endtime="20200730 23:09:18.272"></status>
+<msg timestamp="20200731 21:44:10.412" level="INFO">Creating Session using : alias=wrongcredential, url=https://conduit.productionready.io/, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x000001772311B760&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20200731 21:44:10.412" endtime="20200731 21:44:10.413"></status>
 </kw>
-<kw name="Get Text" library="SeleniumLibrary">
-<doc>Returns the text value of the element identified by ``locator``.</doc>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
 <arguments>
-<arg>xpath://*[contains(text(), "Need an account?")]</arg>
+<arg>wrongcredential</arg>
+<arg>/api/users/login</arg>
 </arguments>
 <assign>
 <var>${response}</var>
 </assign>
-<msg timestamp="20200730 23:09:18.339" level="INFO">${response} = Need an account?</msg>
-<status status="PASS" starttime="20200730 23:09:18.272" endtime="20200730 23:09:18.339"></status>
+<msg timestamp="20200731 21:44:25.735" level="WARN">Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))': //api/users/login</msg>
+<msg timestamp="20200731 21:44:27.436" level="INFO">GET Request : url=https://conduit.productionready.io//api/users/login 
+ path_url=//api/users/login 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic bW5vcEBnbWFpbC5jb206cGFzc3dvcmQxMjM='} 
+ body=None 
+ </msg>
+<msg timestamp="20200731 21:44:27.436" level="INFO">GET Response : url=https://conduit.productionready.io//api/users/login 
+ status=401, reason=Unauthorized 
+ body=HTTP Token: Access denied.
+ 
+ </msg>
+<msg timestamp="20200731 21:44:27.436" level="INFO">c:\users\ncbar\pycharmprojects\automation\venv\lib\site-packages\urllib3\connectionpool.py:981: InsecureRequestWarning: Unverified HTTPS request is being made to host 'conduit.productionready.io'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20200731 21:44:27.441" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<status status="PASS" starttime="20200731 21:44:10.413" endtime="20200731 21:44:27.441"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+</arguments>
+<status status="PASS" starttime="20200731 21:44:27.443" endtime="20200731 21:44:27.447"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<status status="PASS" starttime="20200731 21:44:27.448" endtime="20200731 21:44:27.450"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${response.headers}</arg>
+</arguments>
+<status status="PASS" starttime="20200731 21:44:27.451" endtime="20200731 21:44:27.453"></status>
 </kw>
 <kw name="Should Be Equal As Strings" library="BuiltIn">
 <doc>Fails if objects are unequal after converting them to strings.</doc>
 <arguments>
-<arg>${response}</arg>
-<arg>Need an account?</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.339" endtime="20200730 23:09:18.340"></status>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://*[contains(text(), "Need an account?")]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.340" endtime="20200730 23:09:18.352"></status>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath://*[contains(text(), "Need an account?")]</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.353" level="INFO">Clicking element 'xpath://*[contains(text(), "Need an account?")]'.</msg>
-<status status="PASS" starttime="20200730 23:09:18.352" endtime="20200730 23:09:18.437"></status>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://div//h1[contains(text(), 'Sign up')]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.438" endtime="20200730 23:09:18.455"></status>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://a[contains(text(), 'Have an account?')]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.455" endtime="20200730 23:09:18.469"></status>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://input[contains(@placeholder, 'Username')]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.470" endtime="20200730 23:09:18.482"></status>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://input[contains(@placeholder, 'Email')]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.482" endtime="20200730 23:09:18.491"></status>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://input[contains(@placeholder, 'Password')]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.491" endtime="20200730 23:09:18.497"></status>
-</kw>
-<kw name="Element Should Be Enabled" library="SeleniumLibrary">
-<doc>Verifies that element identified by ``locator`` is enabled.</doc>
-<arguments>
-<arg>xpath://button[contains(text(),'Sign up')]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.497" endtime="20200730 23:09:18.513"></status>
-</kw>
-<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` is visible.</doc>
-<arguments>
-<arg>xpath://a</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.513" endtime="20200730 23:09:18.556"></status>
-</kw>
-<kw name="Get Element Count" library="SeleniumLibrary">
-<doc>Returns the number of elements matching ``locator``.</doc>
-<arguments>
-<arg>xpath://a</arg>
-</arguments>
-<assign>
-<var>${AllLinksCount}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.564" level="INFO">${AllLinksCount} = 13</msg>
-<status status="PASS" starttime="20200730 23:09:18.557" endtime="20200730 23:09:18.564"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${AllLinksCount}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.565" level="INFO">13</msg>
-<status status="PASS" starttime="20200730 23:09:18.565" endtime="20200730 23:09:18.565"></status>
-</kw>
-<kw name="Create List" library="BuiltIn">
-<doc>Returns a list containing given items.</doc>
-<assign>
-<var>@{LinkItems}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.566" level="INFO">@{LinkItems} = [ ]</msg>
-<status status="PASS" starttime="20200730 23:09:18.566" endtime="20200730 23:09:18.566"></status>
-</kw>
-<kw name="${INDEX} IN RANGE [ 1 | ${AllLinksCount} ]" type="for">
-<kw name="${INDEX} = 1" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${INDEX}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.567" level="INFO">1</msg>
-<status status="PASS" starttime="20200730 23:09:18.567" endtime="20200730 23:09:18.567"></status>
-</kw>
-<kw name="Get Text" library="SeleniumLibrary">
-<doc>Returns the text value of the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath=(//a)[${INDEX}]</arg>
-</arguments>
-<assign>
-<var>${lintext}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.596" level="INFO">${lintext} = conduit</msg>
-<status status="PASS" starttime="20200730 23:09:18.568" endtime="20200730 23:09:18.596"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.597" level="INFO">conduit</msg>
-<status status="PASS" starttime="20200730 23:09:18.597" endtime="20200730 23:09:18.598"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<assign>
-<var>${linklength}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.599" level="INFO">Length is 7</msg>
-<msg timestamp="20200730 23:09:18.599" level="INFO">${linklength} = 7</msg>
-<status status="PASS" starttime="20200730 23:09:18.598" endtime="20200730 23:09:18.599"></status>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<arguments>
-<arg>${linklength}&gt;1</arg>
-<arg>Append To List</arg>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<kw name="Append To List" library="Collections">
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.599" endtime="20200730 23:09:18.599"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.599" endtime="20200730 23:09:18.600"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-</arguments>
-<assign>
-<var>${LinkSize}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.600" level="INFO">Length is 1</msg>
-<msg timestamp="20200730 23:09:18.600" level="INFO">${LinkSize} = 1</msg>
-<status status="PASS" starttime="20200730 23:09:18.600" endtime="20200730 23:09:18.600"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${LinkSize}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.600" level="INFO">1</msg>
-<status status="PASS" starttime="20200730 23:09:18.600" endtime="20200730 23:09:18.601"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.567" endtime="20200730 23:09:18.601"></status>
-</kw>
-<kw name="${INDEX} = 2" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${INDEX}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.601" level="INFO">2</msg>
-<status status="PASS" starttime="20200730 23:09:18.601" endtime="20200730 23:09:18.601"></status>
-</kw>
-<kw name="Get Text" library="SeleniumLibrary">
-<doc>Returns the text value of the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath=(//a)[${INDEX}]</arg>
-</arguments>
-<assign>
-<var>${lintext}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.622" level="INFO">${lintext} = Home</msg>
-<status status="PASS" starttime="20200730 23:09:18.601" endtime="20200730 23:09:18.622"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.623" level="INFO">Home</msg>
-<status status="PASS" starttime="20200730 23:09:18.623" endtime="20200730 23:09:18.623"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<assign>
-<var>${linklength}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.623" level="INFO">Length is 4</msg>
-<msg timestamp="20200730 23:09:18.623" level="INFO">${linklength} = 4</msg>
-<status status="PASS" starttime="20200730 23:09:18.623" endtime="20200730 23:09:18.623"></status>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<arguments>
-<arg>${linklength}&gt;1</arg>
-<arg>Append To List</arg>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<kw name="Append To List" library="Collections">
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.624" endtime="20200730 23:09:18.624"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.624" endtime="20200730 23:09:18.624"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-</arguments>
-<assign>
-<var>${LinkSize}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.625" level="INFO">Length is 2</msg>
-<msg timestamp="20200730 23:09:18.625" level="INFO">${LinkSize} = 2</msg>
-<status status="PASS" starttime="20200730 23:09:18.624" endtime="20200730 23:09:18.625"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${LinkSize}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.625" level="INFO">2</msg>
-<status status="PASS" starttime="20200730 23:09:18.625" endtime="20200730 23:09:18.625"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.601" endtime="20200730 23:09:18.625"></status>
-</kw>
-<kw name="${INDEX} = 3" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${INDEX}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.625" level="INFO">3</msg>
-<status status="PASS" starttime="20200730 23:09:18.625" endtime="20200730 23:09:18.625"></status>
-</kw>
-<kw name="Get Text" library="SeleniumLibrary">
-<doc>Returns the text value of the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath=(//a)[${INDEX}]</arg>
-</arguments>
-<assign>
-<var>${lintext}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.645" level="INFO">${lintext} = Sign in</msg>
-<status status="PASS" starttime="20200730 23:09:18.626" endtime="20200730 23:09:18.645"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.645" level="INFO">Sign in</msg>
-<status status="PASS" starttime="20200730 23:09:18.645" endtime="20200730 23:09:18.645"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<assign>
-<var>${linklength}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.645" level="INFO">Length is 7</msg>
-<msg timestamp="20200730 23:09:18.645" level="INFO">${linklength} = 7</msg>
-<status status="PASS" starttime="20200730 23:09:18.645" endtime="20200730 23:09:18.645"></status>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<arguments>
-<arg>${linklength}&gt;1</arg>
-<arg>Append To List</arg>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<kw name="Append To List" library="Collections">
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.645" endtime="20200730 23:09:18.645"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.645" endtime="20200730 23:09:18.645"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-</arguments>
-<assign>
-<var>${LinkSize}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.645" level="INFO">Length is 3</msg>
-<msg timestamp="20200730 23:09:18.645" level="INFO">${LinkSize} = 3</msg>
-<status status="PASS" starttime="20200730 23:09:18.645" endtime="20200730 23:09:18.645"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${LinkSize}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.645" level="INFO">3</msg>
-<status status="PASS" starttime="20200730 23:09:18.645" endtime="20200730 23:09:18.645"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.625" endtime="20200730 23:09:18.645"></status>
-</kw>
-<kw name="${INDEX} = 4" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${INDEX}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.645" level="INFO">4</msg>
-<status status="PASS" starttime="20200730 23:09:18.645" endtime="20200730 23:09:18.645"></status>
-</kw>
-<kw name="Get Text" library="SeleniumLibrary">
-<doc>Returns the text value of the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath=(//a)[${INDEX}]</arg>
-</arguments>
-<assign>
-<var>${lintext}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.660" level="INFO">${lintext} = Sign up</msg>
-<status status="PASS" starttime="20200730 23:09:18.645" endtime="20200730 23:09:18.660"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.660" level="INFO">Sign up</msg>
-<status status="PASS" starttime="20200730 23:09:18.660" endtime="20200730 23:09:18.660"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<assign>
-<var>${linklength}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.660" level="INFO">Length is 7</msg>
-<msg timestamp="20200730 23:09:18.660" level="INFO">${linklength} = 7</msg>
-<status status="PASS" starttime="20200730 23:09:18.660" endtime="20200730 23:09:18.660"></status>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<arguments>
-<arg>${linklength}&gt;1</arg>
-<arg>Append To List</arg>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<kw name="Append To List" library="Collections">
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.660" endtime="20200730 23:09:18.660"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.660" endtime="20200730 23:09:18.660"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-</arguments>
-<assign>
-<var>${LinkSize}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.660" level="INFO">Length is 4</msg>
-<msg timestamp="20200730 23:09:18.660" level="INFO">${LinkSize} = 4</msg>
-<status status="PASS" starttime="20200730 23:09:18.660" endtime="20200730 23:09:18.660"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${LinkSize}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.660" level="INFO">4</msg>
-<status status="PASS" starttime="20200730 23:09:18.660" endtime="20200730 23:09:18.660"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.645" endtime="20200730 23:09:18.660"></status>
-</kw>
-<kw name="${INDEX} = 5" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${INDEX}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.676" level="INFO">5</msg>
-<status status="PASS" starttime="20200730 23:09:18.660" endtime="20200730 23:09:18.676"></status>
-</kw>
-<kw name="Get Text" library="SeleniumLibrary">
-<doc>Returns the text value of the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath=(//a)[${INDEX}]</arg>
-</arguments>
-<assign>
-<var>${lintext}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.696" level="INFO">${lintext} = </msg>
-<status status="PASS" starttime="20200730 23:09:18.676" endtime="20200730 23:09:18.696"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.696" level="INFO"></msg>
-<status status="PASS" starttime="20200730 23:09:18.696" endtime="20200730 23:09:18.696"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<assign>
-<var>${linklength}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.696" level="INFO">Length is 0</msg>
-<msg timestamp="20200730 23:09:18.696" level="INFO">${linklength} = 0</msg>
-<status status="PASS" starttime="20200730 23:09:18.696" endtime="20200730 23:09:18.696"></status>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<arguments>
-<arg>${linklength}&gt;1</arg>
-<arg>Append To List</arg>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.696" endtime="20200730 23:09:18.696"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-</arguments>
-<assign>
-<var>${LinkSize}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.696" level="INFO">Length is 4</msg>
-<msg timestamp="20200730 23:09:18.696" level="INFO">${LinkSize} = 4</msg>
-<status status="PASS" starttime="20200730 23:09:18.696" endtime="20200730 23:09:18.696"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${LinkSize}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.696" level="INFO">4</msg>
-<status status="PASS" starttime="20200730 23:09:18.696" endtime="20200730 23:09:18.696"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.660" endtime="20200730 23:09:18.696"></status>
-</kw>
-<kw name="${INDEX} = 6" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${INDEX}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.696" level="INFO">6</msg>
-<status status="PASS" starttime="20200730 23:09:18.696" endtime="20200730 23:09:18.696"></status>
-</kw>
-<kw name="Get Text" library="SeleniumLibrary">
-<doc>Returns the text value of the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath=(//a)[${INDEX}]</arg>
-</arguments>
-<assign>
-<var>${lintext}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.711" level="INFO">${lintext} = </msg>
-<status status="PASS" starttime="20200730 23:09:18.696" endtime="20200730 23:09:18.711"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.711" level="INFO"></msg>
-<status status="PASS" starttime="20200730 23:09:18.711" endtime="20200730 23:09:18.711"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<assign>
-<var>${linklength}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.711" level="INFO">Length is 0</msg>
-<msg timestamp="20200730 23:09:18.711" level="INFO">${linklength} = 0</msg>
-<status status="PASS" starttime="20200730 23:09:18.711" endtime="20200730 23:09:18.711"></status>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<arguments>
-<arg>${linklength}&gt;1</arg>
-<arg>Append To List</arg>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.711" endtime="20200730 23:09:18.711"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-</arguments>
-<assign>
-<var>${LinkSize}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.711" level="INFO">Length is 4</msg>
-<msg timestamp="20200730 23:09:18.711" level="INFO">${LinkSize} = 4</msg>
-<status status="PASS" starttime="20200730 23:09:18.711" endtime="20200730 23:09:18.711"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${LinkSize}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.711" level="INFO">4</msg>
-<status status="PASS" starttime="20200730 23:09:18.711" endtime="20200730 23:09:18.711"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.696" endtime="20200730 23:09:18.711"></status>
-</kw>
-<kw name="${INDEX} = 7" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${INDEX}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.711" level="INFO">7</msg>
-<status status="PASS" starttime="20200730 23:09:18.711" endtime="20200730 23:09:18.711"></status>
-</kw>
-<kw name="Get Text" library="SeleniumLibrary">
-<doc>Returns the text value of the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath=(//a)[${INDEX}]</arg>
-</arguments>
-<assign>
-<var>${lintext}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.737" level="INFO">${lintext} = </msg>
-<status status="PASS" starttime="20200730 23:09:18.711" endtime="20200730 23:09:18.737"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.737" level="INFO"></msg>
-<status status="PASS" starttime="20200730 23:09:18.737" endtime="20200730 23:09:18.737"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<assign>
-<var>${linklength}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.737" level="INFO">Length is 0</msg>
-<msg timestamp="20200730 23:09:18.737" level="INFO">${linklength} = 0</msg>
-<status status="PASS" starttime="20200730 23:09:18.737" endtime="20200730 23:09:18.737"></status>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<arguments>
-<arg>${linklength}&gt;1</arg>
-<arg>Append To List</arg>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.737" endtime="20200730 23:09:18.737"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-</arguments>
-<assign>
-<var>${LinkSize}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.737" level="INFO">Length is 4</msg>
-<msg timestamp="20200730 23:09:18.737" level="INFO">${LinkSize} = 4</msg>
-<status status="PASS" starttime="20200730 23:09:18.737" endtime="20200730 23:09:18.737"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${LinkSize}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.737" level="INFO">4</msg>
-<status status="PASS" starttime="20200730 23:09:18.737" endtime="20200730 23:09:18.737"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.711" endtime="20200730 23:09:18.737"></status>
-</kw>
-<kw name="${INDEX} = 8" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${INDEX}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.737" level="INFO">8</msg>
-<status status="PASS" starttime="20200730 23:09:18.737" endtime="20200730 23:09:18.737"></status>
-</kw>
-<kw name="Get Text" library="SeleniumLibrary">
-<doc>Returns the text value of the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath=(//a)[${INDEX}]</arg>
-</arguments>
-<assign>
-<var>${lintext}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.770" level="INFO">${lintext} = </msg>
-<status status="PASS" starttime="20200730 23:09:18.737" endtime="20200730 23:09:18.770"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.771" level="INFO"></msg>
-<status status="PASS" starttime="20200730 23:09:18.770" endtime="20200730 23:09:18.771"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<assign>
-<var>${linklength}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.771" level="INFO">Length is 0</msg>
-<msg timestamp="20200730 23:09:18.771" level="INFO">${linklength} = 0</msg>
-<status status="PASS" starttime="20200730 23:09:18.771" endtime="20200730 23:09:18.771"></status>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<arguments>
-<arg>${linklength}&gt;1</arg>
-<arg>Append To List</arg>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.771" endtime="20200730 23:09:18.771"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-</arguments>
-<assign>
-<var>${LinkSize}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.771" level="INFO">Length is 4</msg>
-<msg timestamp="20200730 23:09:18.771" level="INFO">${LinkSize} = 4</msg>
-<status status="PASS" starttime="20200730 23:09:18.771" endtime="20200730 23:09:18.771"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${LinkSize}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.771" level="INFO">4</msg>
-<status status="PASS" starttime="20200730 23:09:18.771" endtime="20200730 23:09:18.771"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.737" endtime="20200730 23:09:18.771"></status>
-</kw>
-<kw name="${INDEX} = 9" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${INDEX}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.771" level="INFO">9</msg>
-<status status="PASS" starttime="20200730 23:09:18.771" endtime="20200730 23:09:18.771"></status>
-</kw>
-<kw name="Get Text" library="SeleniumLibrary">
-<doc>Returns the text value of the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath=(//a)[${INDEX}]</arg>
-</arguments>
-<assign>
-<var>${lintext}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.794" level="INFO">${lintext} = Have an account?</msg>
-<status status="PASS" starttime="20200730 23:09:18.771" endtime="20200730 23:09:18.794"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.794" level="INFO">Have an account?</msg>
-<status status="PASS" starttime="20200730 23:09:18.794" endtime="20200730 23:09:18.794"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<assign>
-<var>${linklength}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.794" level="INFO">Length is 16</msg>
-<msg timestamp="20200730 23:09:18.794" level="INFO">${linklength} = 16</msg>
-<status status="PASS" starttime="20200730 23:09:18.794" endtime="20200730 23:09:18.794"></status>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<arguments>
-<arg>${linklength}&gt;1</arg>
-<arg>Append To List</arg>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<kw name="Append To List" library="Collections">
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.794" endtime="20200730 23:09:18.794"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.794" endtime="20200730 23:09:18.794"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-</arguments>
-<assign>
-<var>${LinkSize}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.794" level="INFO">Length is 5</msg>
-<msg timestamp="20200730 23:09:18.794" level="INFO">${LinkSize} = 5</msg>
-<status status="PASS" starttime="20200730 23:09:18.794" endtime="20200730 23:09:18.794"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${LinkSize}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.794" level="INFO">5</msg>
-<status status="PASS" starttime="20200730 23:09:18.794" endtime="20200730 23:09:18.794"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.771" endtime="20200730 23:09:18.794"></status>
-</kw>
-<kw name="${INDEX} = 10" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${INDEX}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.794" level="INFO">10</msg>
-<status status="PASS" starttime="20200730 23:09:18.794" endtime="20200730 23:09:18.794"></status>
-</kw>
-<kw name="Get Text" library="SeleniumLibrary">
-<doc>Returns the text value of the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath=(//a)[${INDEX}]</arg>
-</arguments>
-<assign>
-<var>${lintext}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.820" level="INFO">${lintext} = </msg>
-<status status="PASS" starttime="20200730 23:09:18.794" endtime="20200730 23:09:18.820"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.821" level="INFO"></msg>
-<status status="PASS" starttime="20200730 23:09:18.820" endtime="20200730 23:09:18.821"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<assign>
-<var>${linklength}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.821" level="INFO">Length is 0</msg>
-<msg timestamp="20200730 23:09:18.821" level="INFO">${linklength} = 0</msg>
-<status status="PASS" starttime="20200730 23:09:18.821" endtime="20200730 23:09:18.821"></status>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<arguments>
-<arg>${linklength}&gt;1</arg>
-<arg>Append To List</arg>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.821" endtime="20200730 23:09:18.822"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-</arguments>
-<assign>
-<var>${LinkSize}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.822" level="INFO">Length is 5</msg>
-<msg timestamp="20200730 23:09:18.822" level="INFO">${LinkSize} = 5</msg>
-<status status="PASS" starttime="20200730 23:09:18.822" endtime="20200730 23:09:18.822"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${LinkSize}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.822" level="INFO">5</msg>
-<status status="PASS" starttime="20200730 23:09:18.822" endtime="20200730 23:09:18.822"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.794" endtime="20200730 23:09:18.822"></status>
-</kw>
-<kw name="${INDEX} = 11" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${INDEX}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.823" level="INFO">11</msg>
-<status status="PASS" starttime="20200730 23:09:18.823" endtime="20200730 23:09:18.823"></status>
-</kw>
-<kw name="Get Text" library="SeleniumLibrary">
-<doc>Returns the text value of the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath=(//a)[${INDEX}]</arg>
-</arguments>
-<assign>
-<var>${lintext}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.849" level="INFO">${lintext} = conduit</msg>
-<status status="PASS" starttime="20200730 23:09:18.823" endtime="20200730 23:09:18.849"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.849" level="INFO">conduit</msg>
-<status status="PASS" starttime="20200730 23:09:18.849" endtime="20200730 23:09:18.849"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<assign>
-<var>${linklength}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.849" level="INFO">Length is 7</msg>
-<msg timestamp="20200730 23:09:18.849" level="INFO">${linklength} = 7</msg>
-<status status="PASS" starttime="20200730 23:09:18.849" endtime="20200730 23:09:18.849"></status>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<arguments>
-<arg>${linklength}&gt;1</arg>
-<arg>Append To List</arg>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<kw name="Append To List" library="Collections">
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.849" endtime="20200730 23:09:18.849"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.849" endtime="20200730 23:09:18.849"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-</arguments>
-<assign>
-<var>${LinkSize}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.849" level="INFO">Length is 6</msg>
-<msg timestamp="20200730 23:09:18.849" level="INFO">${LinkSize} = 6</msg>
-<status status="PASS" starttime="20200730 23:09:18.849" endtime="20200730 23:09:18.849"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${LinkSize}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.849" level="INFO">6</msg>
-<status status="PASS" starttime="20200730 23:09:18.849" endtime="20200730 23:09:18.849"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.823" endtime="20200730 23:09:18.849"></status>
-</kw>
-<kw name="${INDEX} = 12" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${INDEX}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.849" level="INFO">12</msg>
-<status status="PASS" starttime="20200730 23:09:18.849" endtime="20200730 23:09:18.849"></status>
-</kw>
-<kw name="Get Text" library="SeleniumLibrary">
-<doc>Returns the text value of the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath=(//a)[${INDEX}]</arg>
-</arguments>
-<assign>
-<var>${lintext}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.872" level="INFO">${lintext} = Thinkster</msg>
-<status status="PASS" starttime="20200730 23:09:18.849" endtime="20200730 23:09:18.872"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.872" level="INFO">Thinkster</msg>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${lintext}</arg>
-</arguments>
-<assign>
-<var>${linklength}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.872" level="INFO">Length is 9</msg>
-<msg timestamp="20200730 23:09:18.872" level="INFO">${linklength} = 9</msg>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<arguments>
-<arg>${linklength}&gt;1</arg>
-<arg>Append To List</arg>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<kw name="Append To List" library="Collections">
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-<arg>${lintext}</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<arguments>
-<arg>${LinkItems}</arg>
-</arguments>
-<assign>
-<var>${LinkSize}</var>
-</assign>
-<msg timestamp="20200730 23:09:18.872" level="INFO">Length is 7</msg>
-<msg timestamp="20200730 23:09:18.872" level="INFO">${LinkSize} = 7</msg>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${LinkSize}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.872" level="INFO">7</msg>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.849" endtime="20200730 23:09:18.872"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.566" endtime="20200730 23:09:18.872"></status>
-</kw>
-<kw name="Comment" library="BuiltIn">
-<doc>Displays the given messages in the log file as keyword arguments.</doc>
-<arguments>
-<arg>Print all links</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<kw name="${ELEMENT} IN [ @{LinkItems} ]" type="for">
-<kw name="${ELEMENT} = conduit" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${ELEMENT}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.872" level="INFO">conduit</msg>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<kw name="${ELEMENT} = Home" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${ELEMENT}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.872" level="INFO">Home</msg>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<kw name="${ELEMENT} = Sign in" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${ELEMENT}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.872" level="INFO">Sign in</msg>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<kw name="${ELEMENT} = Sign up" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${ELEMENT}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.872" level="INFO">Sign up</msg>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<kw name="${ELEMENT} = Have an account?" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${ELEMENT}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.872" level="INFO">Have an account?</msg>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<kw name="${ELEMENT} = conduit" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${ELEMENT}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.872" level="INFO">conduit</msg>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<kw name="${ELEMENT} = Thinkster" type="foritem">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${ELEMENT}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:18.872" level="INFO">Thinkster</msg>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.872"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:11.532" endtime="20200730 23:09:18.872" critical="yes"></status>
+<arg>${response.status_code}</arg>
+<arg>401</arg>
+</arguments>
+<msg timestamp="20200731 21:44:27.455" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20200731 21:44:27.454" endtime="20200731 21:44:27.455"></status>
+</kw>
+<status status="PASS" starttime="20200731 21:44:10.411" endtime="20200731 21:44:27.456" critical="yes"></status>
 </test>
-<test id="s1-t2" name="Validation of Error messages for all blank values">
-<kw name="Wait Until Element Is Enabled" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` is enabled.</doc>
+<test id="s1-t2" name="Register User">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Username')]</arg>
+<arg>regist</arg>
+<arg>${BASE_URL}</arg>
 </arguments>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:18.903"></status>
+<msg timestamp="20200731 21:44:27.461" level="INFO">Creating Session using : alias=regist, url=https://conduit.productionready.io/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20200731 21:44:27.461" endtime="20200731 21:44:27.461"></status>
 </kw>
-<kw name="Element Should Be Enabled" library="SeleniumLibrary">
-<doc>Verifies that element identified by ``locator`` is enabled.</doc>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
 <arguments>
-<arg>xpath://button[contains(text(),'Sign up')]</arg>
+<arg>FirstName=raj1234</arg>
+<arg>LastName=raj1234</arg>
+<arg>UserName=raj1234</arg>
+<arg>Password=raj1234</arg>
 </arguments>
-<status status="PASS" starttime="20200730 23:09:18.903" endtime="20200730 23:09:18.918"></status>
+<assign>
+<var>${body}</var>
+</assign>
+<msg timestamp="20200731 21:44:27.465" level="INFO">${body} = {'FirstName': 'raj1234', 'LastName': 'raj1234', 'UserName': 'raj1234', 'Password': 'raj1234'}</msg>
+<status status="PASS" starttime="20200731 21:44:27.463" endtime="20200731 21:44:27.466"></status>
 </kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
 <arguments>
-<arg>xpath://button[contains(text(),'Sign up')]</arg>
+<arg>Content-Type=application/json</arg>
 </arguments>
-<msg timestamp="20200730 23:09:18.918" level="INFO">Clicking element 'xpath://button[contains(text(),'Sign up')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:18.918" endtime="20200730 23:09:18.968"></status>
+<assign>
+<var>${header1}</var>
+</assign>
+<msg timestamp="20200731 21:44:27.467" level="INFO">${header1} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20200731 21:44:27.466" endtime="20200731 21:44:27.467"></status>
 </kw>
-<kw name="Maximize Browser Window" library="SeleniumLibrary">
-<doc>Maximizes current browser window.</doc>
-<status status="PASS" starttime="20200730 23:09:18.968" endtime="20200730 23:09:21.136"></status>
-</kw>
-<kw name="Sleep" library="BuiltIn">
-<doc>Pauses the test executed for the given time.</doc>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
 <arguments>
-<arg>5s</arg>
+<arg>regist</arg>
+<arg>/register</arg>
+<arg>data=${body}</arg>
+<arg>headers=${header1}</arg>
 </arguments>
-<msg timestamp="20200730 23:09:26.148" level="INFO">Slept 5 seconds</msg>
-<status status="PASS" starttime="20200730 23:09:21.136" endtime="20200730 23:09:26.148"></status>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20200731 21:44:43.008" level="FAIL">ConnectionError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))</msg>
+<status status="FAIL" starttime="20200731 21:44:27.468" endtime="20200731 21:44:43.008"></status>
 </kw>
-<kw name="Scroll Page To View">
-<arguments>
-<arg>0</arg>
-<arg>2000</arg>
-</arguments>
-<kw name="Execute Javascript" library="SeleniumLibrary">
-<doc>Executes the given JavaScript code with possible arguments.</doc>
-<arguments>
-<arg>window.scrollTo(${x_location},${y_location})</arg>
-</arguments>
-<msg timestamp="20200730 23:09:26.148" level="INFO">Executing JavaScript:
-window.scrollTo(0,2000)
-Without any arguments.</msg>
-<status status="PASS" starttime="20200730 23:09:26.148" endtime="20200730 23:09:26.165"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:26.148" endtime="20200730 23:09:26.165"></status>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(., "username can't be blank")]]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:26.166" endtime="20200730 23:09:26.179"></status>
-</kw>
-<kw name="Element Text Should Be" library="SeleniumLibrary">
-<doc>Verifies that element ``locator`` contains exact the text ``expected``.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(., "username can't be blank")]]</arg>
-<arg>${ERROR_MESSAGE1}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:26.180" level="INFO">Verifying element 'xpath://list-errors//div//li[text()[contains(., "username can't be blank")]]' contains exact text 'username can't be blank'.</msg>
-<status status="PASS" starttime="20200730 23:09:26.179" endtime="20200730 23:09:26.199"></status>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"email can't be blank")]]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:26.199" endtime="20200730 23:09:26.208"></status>
-</kw>
-<kw name="Element Text Should Be" library="SeleniumLibrary">
-<doc>Verifies that element ``locator`` contains exact the text ``expected``.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"email can't be blank")]]</arg>
-<arg>${ERROR_MESSAGE2}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:26.208" level="INFO">Verifying element 'xpath://list-errors//div//li[text()[contains(.,"email can't be blank")]]' contains exact text 'email can't be blank'.</msg>
-<status status="PASS" starttime="20200730 23:09:26.208" endtime="20200730 23:09:26.224"></status>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"password can't be blank")]]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:26.224" endtime="20200730 23:09:26.239"></status>
-</kw>
-<kw name="Element Text Should Be" library="SeleniumLibrary">
-<doc>Verifies that element ``locator`` contains exact the text ``expected``.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"password can't be blank")]]</arg>
-<arg>${ERROR_MESSAGE3}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:26.239" level="INFO">Verifying element 'xpath://list-errors//div//li[text()[contains(.,"password can't be blank")]]' contains exact text 'password can't be blank'.</msg>
-<status status="PASS" starttime="20200730 23:09:26.239" endtime="20200730 23:09:26.255"></status>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"username is too short (minimum is 1 character)")]]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:26.255" endtime="20200730 23:09:26.270"></status>
-</kw>
-<kw name="Element Text Should Be" library="SeleniumLibrary">
-<doc>Verifies that element ``locator`` contains exact the text ``expected``.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"username is too short (minimum is 1 character)")]]</arg>
-<arg>${ERROR_MESSAGE4}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:26.270" level="INFO">Verifying element 'xpath://list-errors//div//li[text()[contains(.,"username is too short (minimum is 1 character)")]]' contains exact text 'username is too short (minimum is 1 character)'.</msg>
-<status status="PASS" starttime="20200730 23:09:26.270" endtime="20200730 23:09:26.286"></status>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"username is too long (maximum is 20 characters)")]]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:26.286" endtime="20200730 23:09:26.302"></status>
-</kw>
-<kw name="Element Text Should Be" library="SeleniumLibrary">
-<doc>Verifies that element ``locator`` contains exact the text ``expected``.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"username is too long (maximum is 20 characters)")]]</arg>
-<arg>${ERROR_MESSAGE5}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:26.302" level="INFO">Verifying element 'xpath://list-errors//div//li[text()[contains(.,"username is too long (maximum is 20 characters)")]]' contains exact text 'username is too long (maximum is 20 characters)'.</msg>
-<status status="PASS" starttime="20200730 23:09:26.302" endtime="20200730 23:09:26.317"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:18.872" endtime="20200730 23:09:26.317" critical="yes"></status>
+<status status="FAIL" starttime="20200731 21:44:27.460" endtime="20200731 21:44:43.010" critical="yes">ConnectionError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))</status>
 </test>
-<test id="s1-t3" name="Validation of Error messages for blank Username">
-<kw name="Wait Until Element Is Enabled" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` is enabled.</doc>
+<test id="s1-t3" name="Log in">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Username')]</arg>
+<arg>LogIn</arg>
+<arg>${BASE_URL}</arg>
 </arguments>
-<status status="PASS" starttime="20200730 23:09:26.317" endtime="20200730 23:09:26.349"></status>
+<msg timestamp="20200731 21:44:43.015" level="INFO">Creating Session using : alias=LogIn, url=https://conduit.productionready.io/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20200731 21:44:43.015" endtime="20200731 21:44:43.015"></status>
 </kw>
-<kw name="Clear Element Text" library="SeleniumLibrary">
-<doc>Clears the value of the text-input-element identified by ``locator``.</doc>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Username')]</arg>
+<arg>LogIn</arg>
+<arg>/api/users/login</arg>
 </arguments>
-<status status="PASS" starttime="20200730 23:09:26.349" endtime="20200730 23:09:26.380"></status>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20200731 21:44:58.359" level="WARN">Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))': //api/users/login</msg>
+<msg timestamp="20200731 21:45:00.203" level="INFO">GET Request : url=https://conduit.productionready.io//api/users/login 
+ path_url=//api/users/login 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20200731 21:45:00.203" level="INFO">GET Response : url=https://conduit.productionready.io//api/users/login 
+ status=200, reason=OK 
+ body={"email":"","password":null} 
+ </msg>
+<msg timestamp="20200731 21:45:00.203" level="INFO">c:\users\ncbar\pycharmprojects\automation\venv\lib\site-packages\urllib3\connectionpool.py:981: InsecureRequestWarning: Unverified HTTPS request is being made to host 'conduit.productionready.io'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20200731 21:45:00.207" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20200731 21:44:43.017" endtime="20200731 21:45:00.207"></status>
 </kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Email')]</arg>
+<arg>${response.status_code}</arg>
 </arguments>
-<msg timestamp="20200730 23:09:26.380" level="INFO">Clicking element 'xpath://input[contains(@placeholder, 'Email')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:26.380" endtime="20200730 23:09:26.445"></status>
+<status status="PASS" starttime="20200731 21:45:00.209" endtime="20200731 21:45:00.210"></status>
 </kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Email')]</arg>
-<arg>${INVALID_EMAIL1}@gmail.com</arg>
-<arg>clear=True</arg>
+<arg>${response.content}</arg>
 </arguments>
-<msg timestamp="20200730 23:09:26.448" level="INFO">Typing text '$%$%$123-@gmail.com' into text field 'xpath://input[contains(@placeholder, 'Email')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:26.447" endtime="20200730 23:09:26.542"></status>
+<status status="PASS" starttime="20200731 21:45:00.211" endtime="20200731 21:45:00.213"></status>
 </kw>
-<kw name="Wait Until Element Is Enabled" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` is enabled.</doc>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Password')]</arg>
+<arg>${response.headers}</arg>
 </arguments>
-<status status="PASS" starttime="20200730 23:09:26.543" endtime="20200730 23:09:26.569"></status>
+<status status="PASS" starttime="20200731 21:45:00.214" endtime="20200731 21:45:00.217"></status>
 </kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Password')]</arg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
 </arguments>
-<msg timestamp="20200730 23:09:26.570" level="INFO">Clicking element 'xpath://input[contains(@placeholder, 'Password')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:26.570" endtime="20200730 23:09:26.612"></status>
+<msg timestamp="20200731 21:45:00.221" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20200731 21:45:00.220" endtime="20200731 21:45:00.221"></status>
 </kw>
-<kw name="Input Password" library="SeleniumLibrary">
-<doc>Types the given password into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>xpath://input[contains(@placeholder, 'Password')]</arg>
-<arg>${INVALID_PASSWORD1}</arg>
-<arg>clear=True</arg>
-</arguments>
-<msg timestamp="20200730 23:09:26.613" level="INFO">Typing password into text field 'xpath://input[contains(@placeholder, 'Password')]'.</msg>
-<msg timestamp="20200730 23:09:26.641" level="INFO">Temporally setting log level to: NONE</msg>
-<msg timestamp="20200730 23:09:26.678" level="INFO">Log level changed from NONE to INFO.</msg>
-<status status="PASS" starttime="20200730 23:09:26.613" endtime="20200730 23:09:26.678"></status>
-</kw>
-<kw name="Element Should Be Enabled" library="SeleniumLibrary">
-<doc>Verifies that element identified by ``locator`` is enabled.</doc>
-<arguments>
-<arg>xpath://button[contains(text(),'Sign up')]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:26.678" endtime="20200730 23:09:26.702"></status>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath://button[contains(text(),'Sign up')]</arg>
-</arguments>
-<msg timestamp="20200730 23:09:26.703" level="INFO">Clicking element 'xpath://button[contains(text(),'Sign up')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:26.703" endtime="20200730 23:09:26.750"></status>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(., "username can't be blank")]]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:26.754" endtime="20200730 23:09:26.767"></status>
-</kw>
-<kw name="Element Text Should Be" library="SeleniumLibrary">
-<doc>Verifies that element ``locator`` contains exact the text ``expected``.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(., "username can't be blank")]]</arg>
-<arg>${ERROR_MESSAGE1}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:26.768" level="INFO">Verifying element 'xpath://list-errors//div//li[text()[contains(., "username can't be blank")]]' contains exact text 'username can't be blank'.</msg>
-<status status="PASS" starttime="20200730 23:09:26.768" endtime="20200730 23:09:26.783"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:26.317" endtime="20200730 23:09:26.783" critical="yes"></status>
+<status status="PASS" starttime="20200731 21:44:43.013" endtime="20200731 21:45:00.224" critical="yes"></status>
 </test>
-<test id="s1-t4" name="Validation of Error messages for blank Email">
-<kw name="Wait Until Element Is Enabled" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` is enabled.</doc>
+<test id="s1-t4" name="Get Article">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Username')]</arg>
+<arg>getarticle</arg>
+<arg>${BASE_URL}</arg>
 </arguments>
-<status status="PASS" starttime="20200730 23:09:26.785" endtime="20200730 23:09:27.663"></status>
+<msg timestamp="20200731 21:45:00.229" level="INFO">Creating Session using : alias=getarticle, url=https://conduit.productionready.io/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20200731 21:45:00.228" endtime="20200731 21:45:00.229"></status>
 </kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Username')]</arg>
+<arg>getarticle</arg>
+<arg>/api/articles?limit=10&amp;offset=0&amp;tag=testing</arg>
 </arguments>
-<msg timestamp="20200730 23:09:27.663" level="INFO">Clicking element 'xpath://input[contains(@placeholder, 'Username')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:27.663" endtime="20200730 23:09:27.706"></status>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20200731 21:45:15.768" level="WARN">Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))': //api/articles?limit=10&amp;offset=0&amp;tag=testing</msg>
+<msg timestamp="20200731 21:45:17.614" level="INFO">GET Request : url=https://conduit.productionready.io//api/articles?limit=10&amp;offset=0&amp;tag=testing 
+ path_url=//api/articles?limit=10&amp;offset=0&amp;tag=testing 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20200731 21:45:17.614" level="INFO">GET Response : url=https://conduit.productionready.io//api/articles?limit=10&amp;offset=0&amp;tag=testing 
+ status=200, reason=OK 
+ body={"articles":[{"title":"oh hi","slug":"oh-hi-poorgl","body":"testing body of article","createdAt":"2020-07-29T18:17:44.621Z","updatedAt":"2020-07-30T17:09:11.688Z","tagList":["testing","boom"],"description":"nothing","author":{"username":"asdasdad34555","bio":null,"image":"https://static.productionready.io/images/smiley-cyrus.jpg","following":false},"favorited":false,"favoritesCount":1},{"title":"This is my article title","slug":"this-is-my-article-title-9ybw0f","body":"# Title of the body\n\n## subtitle... about subtitle :)\n\nSome random text... as a body content.","createdAt":"2020-07-29T10:05:17.991Z","updatedAt":"2020-07-29T10:05:17.991Z","tagList":["LoveElm","testing","Europe","Slovenia"],"description":"Just some random testing","author":{"username":"preator","bio":null,"image":"https://static.productionready.io/images/smiley-cyrus.jpg","following":false},"favorited":false,"favoritesCount":0},{"title":"testing","slug":"testing-t1bqrq","body":"testing","createdAt":"2020-07-27T11:55:20.582Z","updatedAt":"2020-07-27T11:55:20.582Z","tagList":["testing"],"description":"testing","author":{"username":"conductor","bio":"ok","image":"https://static.productionready.io/images/smiley-cyrus.jpg","following":false},"favorited":false,"favoritesCount":2},{"title":"Hello, world!","slug":"hello-world-2mykv5","body":"This is a test article, it doesn't say much.","createdAt":"2020-07-23T14:38:10.547Z","updatedAt":"2020-07-23T14:38:10.547Z","tagList":["web-dev","testing"],"description":"A short article for testing...","author":{"username":"mrhp123","bio":"This is a short bio.","image":"https://image.flaticon.com/icons/svg/2922/2922688.svg","following":false},"favorited":false,"favoritesCount":1},{"title":"testing","slug":"testing-ia1utw","body":"testing","createdAt":"2020-07-23T12:35:27.103Z","updatedAt":"2020-07-23T12:35:27.103Z","tagList":["testing"],"description":"testing","author":{"username":"conductor","bio":"ok","image":"https://static.productionready.io/images/smiley-cyrus.jpg","following":false},"favorited":false,"favoritesCount":1},{"title":"Random Title","slug":"random-title-rzh45e","body":"# I don't know markdown","createdAt":"2020-07-17T05:47:52.835Z","updatedAt":"2020-07-17T05:47:52.835Z","tagList":["demo","react","next","node","testing"],"description":"Nothing ","author":{"username":"Testing252","bio":"not a good boy!\n","image":"https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1\u0026q=80\u0026fm=jpg\u0026crop=entropy\u0026cs=tinysrgb\u0026w=1080\u0026fit=max\u0026ixid=eyJhcHBfaWQiOjEyMDd9","following":false},"favorited":false,"favoritesCount":1},{"title":"More Testing","slug":"more-testing-6zvizs","body":"\u003cp align=\"center\"\u003e\u003ca href=\"#nastyox\"\u003e\u003cimg src=\"http://randojs.com/images/shapeShifterGray.gif\" alt=\"Gray shape shifter\" height=\"60\"/\u003e\u003c/a\u003e\u003c/p\u003e\n\u003ch1 align=\"center\"\u003eRando.js\u003c/h1\u003e\n\u003cp align=\"center\"\u003eThe world's easiest, most powerful random function.\u003c/p\u003e\n\n\u003cp align=\"center\"\u003e\n\t\u003ca href=\"https://github.com/nastyox/Rando.js/blob/master/1.0.0.js\"\u003e\u003cimg src=\"http://randojs.com/images/smallsize.png\" height=\"20\"/\u003e\u003c/a\u003e\n    \u003ca href=\"https://twitter.com/intent/tweet?text=Ditch%20all%20that%20convoluted%20%22Math.random()%22%20code.%20Rando.js%20makes%20picking%20a%20number%201-100%20as%20simple%20as%20%22rando(1,%20100)%22,%20and%20it%20can%20do%20way%20more%20just%20as%20easily.\u0026url=https://github.com/nastyox/Rando.js\u0026hashtags=javascript,opensource,js,webdev,developers\"\u003e\u003cimg src=\"http://randojs.com/images/tweetShield.svg\" alt=\"Tweet\" height=\"20\"/\u003e\u003c/a\u003e\n\u003c/p\u003e\u003cbr/\u003e\u003cbr/\u003e\n\n\u003cp align=\"center\"\u003e\u003ca href=\"#nastyox\"\u003e\u003cimg src=\"http://randojs.com/images/10fpswide.gif\" width=\"100%\"/\u003e\u003c/a\u003e\u003ca href=\"#nastyox\"\u003e\u003cimg src=\"http://randojs.com/images/dropShadow.png\" width=\"100%\"/\u003e\u003c/a\u003e\u003c/p\u003e\u003cbr/\u003e\n\n## :hear_no_evil:  What's all the hullabaloo?  \n\u003ca href=\"https://randojs.com\" target=\"_blank\"\u003eRando.js\u003c/a\u003e helps JavaScript developers code randomness more simply and readably. Whether you need to find a random int/float between two numbers, pick a random value from an array, choose a random element from your jQuery object, grab a character from a string, toss a coin, or do anything of the like while even preventing repetitions, we've got you covered. The best part? Our commands are extremely lightweight and developer friendly- which means it won't take a toll on your project, and it's uber-simple to implement.  \u003cbr/\u003e\u003cbr/\u003e\u003cbr/\u003e\n\n\n\n## :zap:  Fast implementation  \n   **Step 1:** Paste the following script tag into the head of your HTML document:\u003cbr/\u003e\n  ```JavaScript\n\u003cscript src=\"https://randojs.com/1.0.0.js\"\u003e\u003c/script\u003e\n  ```  \n\n   **Step 2:** Use any of the commands explained at \u003ca href=\"https://randojs.com\" target=\"_blank\"\u003ehttps://randojs.com/\u003c/a\u003e in the document's JavaScript as you like.  \u003cbr/\u003e\u003cbr/\u003e\u003cbr/\u003e\n  \n  \n  \n## :tada:  Examples  \n  ```JavaScript\n   rando()                       //a floating-point number between 0 and 1 (could be exactly 0, but never exactly 1)  \n   rando(5)                      //an integer between 0 and 5 (could be 0 or 5)  \n   rando(5, 10)                  //a random integer between 5 and 10 (could be 5 or 10)  \n   rando(5, \"float\")             //a floating-point number between 0 and 5 (could be exactly 0, but never exactly 5)  \n   rando(5, 10, \"float\")         //a floating-point number between 5 and 10 (could be exactly 5, but never exactly 10)  \n   rando(true, false)            //either true or false  \n   rando([\"a\", \"b\"])             //{index:..., value:...} object representing a value of the provided array OR false if array is empty  \n   rando({a: 1, b: 2})           //{key:..., value:...} object representing a property of the provided object OR false if object has no properties  \n   rando($(\"div\"))               //{index:..., value:...} object representing a jQuery element from the provided jQuery element set OR false if the provided jQuery element set does not contain any elements  \n   rando(\"Gee willikers!\")       //a character from the provided string OR false if the string is empty. Reoccurring characters will naturally form a more likely return value  \n   rando(null)                   //ANY invalid arguments return false  \n  ```\n  \n### \u0026#8674; Prevent repetitions by grabbing a sequence and looping through it  \n  ```JavaScript\n   randoSequence(5)              //an array of integers from 0 through 5 in random order  \n   randoSequence(5, 10)          //an array of integers from 5 through 10 in random order  \n   randoSequence([\"a\", \"b\"])     //an array of {index:..., value:...} objects representing the values of the provided array in random order  \n   randoSequence({a: 1, b: 2})   //an array of {key:..., value:...} objects representing the properties of the provided object in random order  \n   randoSequence($(\"div\"))       //an array of {index:..., value:...} objects representing all jQuery elements from the provided jQuery element set in random order  \n   randoSequence(\"Good gravy!\")  //an array of the characters of the provided string in random order  \n   randoSequence(null)           //ANY invalid arguments return false\n```\n\u003cbr/\u003e\n\u003cp align=\"center\"\u003e\u003ca href=\"#nastyox\"\u003e\u003cimg src=\"http://randojs.com/images/barsSmall.gif\" alt=\"Animated footer bars\" width=\"100%\"/\u003e\u003c/a\u003e\u003c/p\u003e","createdAt":"2020-06-25T15:48:05.298Z","updatedAt":"2020-06-25T15:48:05.298Z","tagList":["money","tag2","tag1","testing","js","random"],"description":"This one is some more complex markdown","author":{"username":"Sree Kotay","bio":"Cool.\n@sreekotay twitter. Come find me. Cuz... why not?","image":"https://miro.medium.com/fit/c/192/192/1*3_39LNZnwKtn-remDCGwiw.jpeg","following":false},"favorited":false,"favoritesCount":2},{"title":"Test","slug":"test-6g2xtb","body":"What in the world is this markdown editor doing?","createdAt":"2020-06-24T20:19:55.885Z","updatedAt":"2020-06-24T20:19:55.885Z","tagList":["testing"],"description":"Testing it out","author":{"username":"uatest01234","bio":null,"image":"https://static.productionready.io/images/smiley-cyrus.jpg","following":false},"favorited":false,"favoritesCount":0},{"title":"Lorem upsum","slug":"lorem-upsum-1y9rbo","body":"# this is very interesting stuff\n\nvery **important** as they say!\n\n## and some more","createdAt":"2020-06-18T14:30:45.833Z","updatedAt":"2020-06-18T14:33:13.198Z","tagList":["article","testing","lorem"],"description":"sample text","author":{"username":"shahabV","bio":"this is the best conduit app ever","image":"https://randomuser.me/api/portraits/men/62.jpg","following":false},"favorited":false,"favoritesCount":1},{"title":"first title","slug":"first-title-ziup5j","body":"# header 1\n\n## header 2\n\ntest","createdAt":"2020-06-06T01:44:34.984Z","updatedAt":"2020-06-06T01:46:09.938Z","tagList":["testing","test"],"description":"testing","author":{"username":"osunguk","bio":null,"image":"https://static.productionready.io/images/smiley-cyrus.jpg","following":false},"favorited":false,"favoritesCount":3}],"articlesCount":137} 
+ </msg>
+<msg timestamp="20200731 21:45:17.614" level="INFO">c:\users\ncbar\pycharmprojects\automation\venv\lib\site-packages\urllib3\connectionpool.py:981: InsecureRequestWarning: Unverified HTTPS request is being made to host 'conduit.productionready.io'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20200731 21:45:17.615" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20200731 21:45:00.230" endtime="20200731 21:45:17.615"></status>
 </kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Username')]</arg>
-<arg>${INVALID_USERID1}</arg>
-<arg>clear=True</arg>
+<arg>${response.status_code}</arg>
 </arguments>
-<msg timestamp="20200730 23:09:27.707" level="INFO">Typing text '$%$%$123-' into text field 'xpath://input[contains(@placeholder, 'Username')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:27.707" endtime="20200730 23:09:27.763"></status>
+<status status="PASS" starttime="20200731 21:45:17.617" endtime="20200731 21:45:17.619"></status>
 </kw>
-<kw name="Clear Element Text" library="SeleniumLibrary">
-<doc>Clears the value of the text-input-element identified by ``locator``.</doc>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Email')]</arg>
+<arg>${response.content}</arg>
 </arguments>
-<status status="PASS" starttime="20200730 23:09:27.764" endtime="20200730 23:09:27.791"></status>
+<status status="PASS" starttime="20200731 21:45:17.620" endtime="20200731 21:45:17.633"></status>
 </kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Password')]</arg>
+<arg>${response.headers}</arg>
 </arguments>
-<msg timestamp="20200730 23:09:27.794" level="INFO">Clicking element 'xpath://input[contains(@placeholder, 'Password')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:27.794" endtime="20200730 23:09:27.835"></status>
+<status status="PASS" starttime="20200731 21:45:17.635" endtime="20200731 21:45:17.637"></status>
 </kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Password')]</arg>
-<arg>${INVALID_PASSWORD1}</arg>
-<arg>clear=True</arg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
 </arguments>
-<msg timestamp="20200730 23:09:27.836" level="INFO">Typing text 'password@rd123' into text field 'xpath://input[contains(@placeholder, 'Password')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:27.835" endtime="20200730 23:09:27.913"></status>
+<msg timestamp="20200731 21:45:17.639" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20200731 21:45:17.638" endtime="20200731 21:45:17.639"></status>
 </kw>
-<kw name="Element Should Be Enabled" library="SeleniumLibrary">
-<doc>Verifies that element identified by ``locator`` is enabled.</doc>
-<arguments>
-<arg>xpath://button[contains(text(),'Sign up')]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:27.914" endtime="20200730 23:09:27.932"></status>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath://button[contains(text(),'Sign up')]</arg>
-</arguments>
-<msg timestamp="20200730 23:09:27.933" level="INFO">Clicking element 'xpath://button[contains(text(),'Sign up')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:27.933" endtime="20200730 23:09:27.961"></status>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"email can't be blank")]]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:27.961" endtime="20200730 23:09:28.617"></status>
-</kw>
-<kw name="Element Text Should Be" library="SeleniumLibrary">
-<doc>Verifies that element ``locator`` contains exact the text ``expected``.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"email can't be blank")]]</arg>
-<arg>${ERROR_MESSAGE2}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:28.617" level="INFO">Verifying element 'xpath://list-errors//div//li[text()[contains(.,"email can't be blank")]]' contains exact text 'email can't be blank'.</msg>
-<status status="PASS" starttime="20200730 23:09:28.617" endtime="20200730 23:09:28.632"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:26.784" endtime="20200730 23:09:28.632" critical="yes"></status>
+<status status="PASS" starttime="20200731 21:45:00.227" endtime="20200731 21:45:17.640" critical="yes"></status>
 </test>
-<test id="s1-t5" name="Validation of Error messages for blank Password">
-<kw name="Wait Until Element Is Enabled" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` is enabled.</doc>
+<test id="s1-t5" name="Post Comment">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Username')]</arg>
+<arg>postcomment</arg>
+<arg>${BASE_URL}</arg>
 </arguments>
-<status status="PASS" starttime="20200730 23:09:28.632" endtime="20200730 23:09:28.648"></status>
+<msg timestamp="20200731 21:45:17.645" level="INFO">Creating Session using : alias=postcomment, url=https://conduit.productionready.io/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20200731 21:45:17.644" endtime="20200731 21:45:17.646"></status>
 </kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Username')]</arg>
+<arg>Comment=This is My First Comment</arg>
 </arguments>
-<msg timestamp="20200730 23:09:28.648" level="INFO">Clicking element 'xpath://input[contains(@placeholder, 'Username')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:28.648" endtime="20200730 23:09:28.697"></status>
+<assign>
+<var>${body}</var>
+</assign>
+<msg timestamp="20200731 21:45:17.648" level="INFO">${body} = {'Comment': 'This is My First Comment'}</msg>
+<status status="PASS" starttime="20200731 21:45:17.647" endtime="20200731 21:45:17.648"></status>
 </kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Username')]</arg>
-<arg>${INVALID_USERID1}</arg>
-<arg>clear=True</arg>
+<arg>Content-Type=application/json</arg>
 </arguments>
-<msg timestamp="20200730 23:09:28.700" level="INFO">Typing text '$%$%$123-' into text field 'xpath://input[contains(@placeholder, 'Username')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:28.700" endtime="20200730 23:09:28.767"></status>
+<assign>
+<var>${header1}</var>
+</assign>
+<msg timestamp="20200731 21:45:17.652" level="INFO">${header1} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20200731 21:45:17.651" endtime="20200731 21:45:17.652"></status>
 </kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
+<kw name="Put Request" library="RequestsLibrary">
+<doc>Send a PUT request on the session object found using the
+given `alias`</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Email')]</arg>
+<arg>postcomment</arg>
+<arg>/api/articles/1/comments</arg>
+<arg>data=${body}</arg>
+<arg>headers=${header1}</arg>
 </arguments>
-<msg timestamp="20200730 23:09:28.768" level="INFO">Clicking element 'xpath://input[contains(@placeholder, 'Email')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:28.768" endtime="20200730 23:09:28.796"></status>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20200731 21:45:32.972" level="WARN">Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))': //api/articles/1/comments</msg>
+<msg timestamp="20200731 21:45:34.201" level="INFO">PUT Request : url=https://conduit.productionready.io//api/articles/1/comments 
+ path_url=//api/articles/1/comments 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '39'} 
+ body={"Comment": "This is My First Comment"} 
+ </msg>
+<msg timestamp="20200731 21:45:34.201" level="INFO">PUT Response : url=https://conduit.productionready.io//api/articles/1/comments 
+ status=404, reason=Not Found 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;The page you were looking for doesn't exist (404)&lt;/title&gt;
+&lt;meta name="viewport" content="width=device-width,initial-scale=1"&gt;
+&lt;style&gt;
+  body {
+    background-color: #EFEFEF;
+    color: #2E2F30;
+    text-align: center;
+    font-family: arial, sans-serif;
+    margin: 0;
+  }
+
+  div.dialog {
+    width: 95%;
+    max-width: 33em;
+    margin: 4em auto 0;
+  }
+
+  div.dialog &gt; div {
+    border: 1px solid #CCC;
+    border-right-color: #999;
+    border-left-color: #999;
+    border-bottom-color: #BBB;
+    border-top: #B00100 solid 4px;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    background-color: white;
+    padding: 7px 12% 0;
+    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+  }
+
+  h1 {
+    font-size: 100%;
+    color: #730E15;
+    line-height: 1.5em;
+  }
+
+  div.dialog &gt; p {
+    margin: 0 0 1em;
+    padding: 1em;
+    background-color: #F7F7F7;
+    border: 1px solid #CCC;
+    border-right-color: #999;
+    border-left-color: #999;
+    border-bottom-color: #999;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-color: #DADADA;
+    color: #666;
+    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+  }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class="dialog"&gt;
+&lt;div&gt;
+&lt;h1&gt;The page you were looking for doesn't exist.&lt;/h1&gt;
+&lt;p&gt;You may have mistyped the address or the page may have moved.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;If you are the application owner check the logs for more information.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+ 
+ </msg>
+<msg timestamp="20200731 21:45:34.201" level="INFO">c:\users\ncbar\pycharmprojects\automation\venv\lib\site-packages\urllib3\connectionpool.py:981: InsecureRequestWarning: Unverified HTTPS request is being made to host 'conduit.productionready.io'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20200731 21:45:34.206" level="INFO">${response} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20200731 21:45:17.657" endtime="20200731 21:45:34.206"></status>
 </kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Email')]</arg>
-<arg>${INVALID_EMAIL1}@gmail.com</arg>
-<arg>clear=True</arg>
+<arg>${response.status_code}</arg>
 </arguments>
-<msg timestamp="20200730 23:09:28.797" level="INFO">Typing text '$%$%$123-@gmail.com' into text field 'xpath://input[contains(@placeholder, 'Email')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:28.797" endtime="20200730 23:09:28.892"></status>
+<status status="PASS" starttime="20200731 21:45:34.208" endtime="20200731 21:45:34.211"></status>
 </kw>
-<kw name="Clear Element Text" library="SeleniumLibrary">
-<doc>Clears the value of the text-input-element identified by ``locator``.</doc>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Password')]</arg>
+<arg>${response.content}</arg>
 </arguments>
-<status status="PASS" starttime="20200730 23:09:28.892" endtime="20200730 23:09:28.921"></status>
+<status status="PASS" starttime="20200731 21:45:34.212" endtime="20200731 21:45:34.215"></status>
 </kw>
-<kw name="Element Should Be Enabled" library="SeleniumLibrary">
-<doc>Verifies that element identified by ``locator`` is enabled.</doc>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
 <arguments>
-<arg>xpath://button[contains(text(),'Sign up')]</arg>
+<arg>${response.headers}</arg>
 </arguments>
-<status status="PASS" starttime="20200730 23:09:28.922" endtime="20200730 23:09:28.940"></status>
+<status status="PASS" starttime="20200731 21:45:34.216" endtime="20200731 21:45:34.218"></status>
 </kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
 <arguments>
-<arg>xpath://button[contains(text(),'Sign up')]</arg>
+<arg>${response.status_code}</arg>
+<arg>201</arg>
 </arguments>
-<msg timestamp="20200730 23:09:28.940" level="INFO">Clicking element 'xpath://button[contains(text(),'Sign up')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:28.940" endtime="20200730 23:09:28.965"></status>
+<msg timestamp="20200731 21:45:34.221" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<msg timestamp="20200731 21:45:34.221" level="FAIL">404 != 201</msg>
+<status status="FAIL" starttime="20200731 21:45:34.219" endtime="20200731 21:45:34.221"></status>
 </kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"password can't be blank")]]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:28.966" endtime="20200730 23:09:29.827"></status>
-</kw>
-<kw name="Element Text Should Be" library="SeleniumLibrary">
-<doc>Verifies that element ``locator`` contains exact the text ``expected``.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"password can't be blank")]]</arg>
-<arg>${ERROR_MESSAGE3}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:29.827" level="INFO">Verifying element 'xpath://list-errors//div//li[text()[contains(.,"password can't be blank")]]' contains exact text 'password can't be blank'.</msg>
-<status status="PASS" starttime="20200730 23:09:29.827" endtime="20200730 23:09:29.843"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:28.632" endtime="20200730 23:09:29.843" critical="yes"></status>
+<status status="FAIL" starttime="20200731 21:45:17.643" endtime="20200731 21:45:34.224" critical="yes">404 != 201</status>
 </test>
-<test id="s1-t6" name="Validation of Error messages for already existing UserName EmailId">
-<kw name="Wait Until Element Is Enabled" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` is enabled.</doc>
+<test id="s1-t6" name="Delete Comment">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Username')]</arg>
+<arg>deletearticle</arg>
+<arg>${BASE_URL}</arg>
 </arguments>
-<status status="PASS" starttime="20200730 23:09:29.858" endtime="20200730 23:09:29.874"></status>
+<msg timestamp="20200731 21:45:34.231" level="INFO">Creating Session using : alias=deletearticle, url=https://conduit.productionready.io/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20200731 21:45:34.230" endtime="20200731 21:45:34.234"></status>
 </kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Username')]</arg>
+<arg>deletearticle</arg>
+<arg>/api/articles/1/comments/1</arg>
 </arguments>
-<msg timestamp="20200730 23:09:29.874" level="INFO">Clicking element 'xpath://input[contains(@placeholder, 'Username')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:29.874" endtime="20200730 23:09:29.913"></status>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20200731 21:45:35.634" level="INFO">POST Request : url=https://conduit.productionready.io//api/articles/1/comments/1 
+ path_url=//api/articles/1/comments/1 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20200731 21:45:35.634" level="INFO">POST Response : url=https://conduit.productionready.io//api/articles/1/comments/1 
+ status=404, reason=Not Found 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;The page you were looking for doesn't exist (404)&lt;/title&gt;
+&lt;meta name="viewport" content="width=device-width,initial-scale=1"&gt;
+&lt;style&gt;
+  body {
+    background-color: #EFEFEF;
+    color: #2E2F30;
+    text-align: center;
+    font-family: arial, sans-serif;
+    margin: 0;
+  }
+
+  div.dialog {
+    width: 95%;
+    max-width: 33em;
+    margin: 4em auto 0;
+  }
+
+  div.dialog &gt; div {
+    border: 1px solid #CCC;
+    border-right-color: #999;
+    border-left-color: #999;
+    border-bottom-color: #BBB;
+    border-top: #B00100 solid 4px;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    background-color: white;
+    padding: 7px 12% 0;
+    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+  }
+
+  h1 {
+    font-size: 100%;
+    color: #730E15;
+    line-height: 1.5em;
+  }
+
+  div.dialog &gt; p {
+    margin: 0 0 1em;
+    padding: 1em;
+    background-color: #F7F7F7;
+    border: 1px solid #CCC;
+    border-right-color: #999;
+    border-left-color: #999;
+    border-bottom-color: #999;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-color: #DADADA;
+    color: #666;
+    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+  }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class="dialog"&gt;
+&lt;div&gt;
+&lt;h1&gt;The page you were looking for doesn't exist.&lt;/h1&gt;
+&lt;p&gt;You may have mistyped the address or the page may have moved.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;If you are the application owner check the logs for more information.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+ 
+ </msg>
+<msg timestamp="20200731 21:45:35.634" level="INFO">c:\users\ncbar\pycharmprojects\automation\venv\lib\site-packages\urllib3\connectionpool.py:981: InsecureRequestWarning: Unverified HTTPS request is being made to host 'conduit.productionready.io'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20200731 21:45:35.638" level="INFO">${response} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20200731 21:45:34.234" endtime="20200731 21:45:35.638"></status>
 </kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Username')]</arg>
-<arg>${INVALID_USERID1}</arg>
-<arg>clear=True</arg>
+<arg>${response.status_code}</arg>
 </arguments>
-<msg timestamp="20200730 23:09:29.915" level="INFO">Typing text '$%$%$123-' into text field 'xpath://input[contains(@placeholder, 'Username')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:29.914" endtime="20200730 23:09:29.996"></status>
+<status status="PASS" starttime="20200731 21:45:35.640" endtime="20200731 21:45:35.641"></status>
 </kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Email')]</arg>
+<arg>${response.content}</arg>
 </arguments>
-<msg timestamp="20200730 23:09:29.997" level="INFO">Clicking element 'xpath://input[contains(@placeholder, 'Email')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:29.996" endtime="20200730 23:09:30.028"></status>
+<status status="PASS" starttime="20200731 21:45:35.642" endtime="20200731 21:45:35.647"></status>
 </kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Email')]</arg>
-<arg>${INVALID_EMAIL1}@gmail.com</arg>
-<arg>clear=True</arg>
+<arg>${response.headers}</arg>
 </arguments>
-<msg timestamp="20200730 23:09:30.029" level="INFO">Typing text '$%$%$123-@gmail.com' into text field 'xpath://input[contains(@placeholder, 'Email')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:30.028" endtime="20200730 23:09:30.124"></status>
+<status status="PASS" starttime="20200731 21:45:35.648" endtime="20200731 21:45:35.650"></status>
 </kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
 <arguments>
-<arg>xpath://input[contains(@placeholder, 'Password')]</arg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
 </arguments>
-<msg timestamp="20200730 23:09:30.125" level="INFO">Clicking element 'xpath://input[contains(@placeholder, 'Password')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:30.124" endtime="20200730 23:09:30.161"></status>
+<msg timestamp="20200731 21:45:35.653" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<msg timestamp="20200731 21:45:35.653" level="FAIL">404 != 200</msg>
+<status status="FAIL" starttime="20200731 21:45:35.652" endtime="20200731 21:45:35.653"></status>
 </kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>xpath://input[contains(@placeholder, 'Password')]</arg>
-<arg>${INVALID_PASSWORD1}</arg>
-<arg>clear=True</arg>
-</arguments>
-<msg timestamp="20200730 23:09:30.162" level="INFO">Typing text 'password@rd123' into text field 'xpath://input[contains(@placeholder, 'Password')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:30.162" endtime="20200730 23:09:30.224"></status>
-</kw>
-<kw name="Element Should Be Enabled" library="SeleniumLibrary">
-<doc>Verifies that element identified by ``locator`` is enabled.</doc>
-<arguments>
-<arg>xpath://button[contains(text(),'Sign up')]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:30.224" endtime="20200730 23:09:30.239"></status>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
-<arguments>
-<arg>xpath://button[contains(text(),'Sign up')]</arg>
-</arguments>
-<msg timestamp="20200730 23:09:30.240" level="INFO">Clicking element 'xpath://button[contains(text(),'Sign up')]'.</msg>
-<status status="PASS" starttime="20200730 23:09:30.240" endtime="20200730 23:09:30.267"></status>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"email has already been taken")]]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:30.268" endtime="20200730 23:09:30.277"></status>
-</kw>
-<kw name="Element Text Should Be" library="SeleniumLibrary">
-<doc>Verifies that element ``locator`` contains exact the text ``expected``.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"email has already been taken")]]</arg>
-<arg>${ERROR_MESSAGE6}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:30.278" level="INFO">Verifying element 'xpath://list-errors//div//li[text()[contains(.,"email has already been taken")]]' contains exact text 'email has already been taken'.</msg>
-<status status="PASS" starttime="20200730 23:09:30.278" endtime="20200730 23:09:30.294"></status>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"username has already been taken")]]</arg>
-</arguments>
-<status status="PASS" starttime="20200730 23:09:30.295" endtime="20200730 23:09:30.304"></status>
-</kw>
-<kw name="Element Text Should Be" library="SeleniumLibrary">
-<doc>Verifies that element ``locator`` contains exact the text ``expected``.</doc>
-<arguments>
-<arg>xpath://list-errors//div//li[text()[contains(.,"username has already been taken")]]</arg>
-<arg>${ERROR_MESSAGE7}</arg>
-</arguments>
-<msg timestamp="20200730 23:09:30.304" level="INFO">Verifying element 'xpath://list-errors//div//li[text()[contains(.,"username has already been taken")]]' contains exact text 'username has already been taken'.</msg>
-<status status="PASS" starttime="20200730 23:09:30.304" endtime="20200730 23:09:30.320"></status>
-</kw>
-<status status="PASS" starttime="20200730 23:09:29.858" endtime="20200730 23:09:30.320" critical="yes"></status>
+<status status="FAIL" starttime="20200731 21:45:34.228" endtime="20200731 21:45:35.655" critical="yes">404 != 200</status>
 </test>
-<status status="PASS" starttime="20200730 23:09:11.375" endtime="20200730 23:09:30.320"></status>
+<status status="FAIL" starttime="20200731 21:44:10.275" endtime="20200731 21:45:35.660"></status>
 </suite>
 <statistics>
 <total>
-<stat pass="6" fail="0">Critical Tests</stat>
-<stat pass="6" fail="0">All Tests</stat>
+<stat pass="3" fail="3">Critical Tests</stat>
+<stat pass="3" fail="3">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat pass="6" fail="0" id="s1" name="Tc1">Tc1</stat>
+<stat pass="3" fail="3" id="s1" name="Tc4">Tc4</stat>
 </suite>
 </statistics>
 <errors>
+<msg timestamp="20200731 21:44:25.735" level="WARN">Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))': //api/users/login</msg>
+<msg timestamp="20200731 21:44:58.359" level="WARN">Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))': //api/users/login</msg>
+<msg timestamp="20200731 21:45:15.768" level="WARN">Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))': //api/articles?limit=10&amp;offset=0&amp;tag=testing</msg>
+<msg timestamp="20200731 21:45:32.972" level="WARN">Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))': //api/articles/1/comments</msg>
 </errors>
 </robot>

@@ -22,4 +22,26 @@ make sure \user\local\bin is added to Path
 10. Open Pycharm import project to pycharm 
 11. Now open terminal to execute test case
  use command 
+
 e.g robot C:\Users\ncbar\PycharmProjects\Automation\TestCases\tc1.robot
+
+12. Following additional Library required for api Testing,
+These need to be installed from command line
+ as well as need to be configured from PyCharm
+
+1-robot framework 
+(already done in previous step else -->> pip install robotframework
+2-requests 
+	-->> pip install requests
+3-robortframework-requests 
+ -->> pip install robotframework-requests
+4-robotframework-jsonlibrary
+ -->> pip install robotframework-jsonlibrary
+13. Now on PyCharm 
+select Project-->>File-->>Settings-->>Projects-->>Project Interpreter to add these click on '+'
+make sure  by adding robotframework-jsonlibrary, below libraries also added.
+
+jasonpath_rw
+jsonpath_rw_ext
+
+
