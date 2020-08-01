@@ -143,6 +143,7 @@ Validation of Error messages for already existing UserName EmailId
     Element Text Should Be  xpath://list-errors//div//li[text()[contains(.,"email has already been taken")]]  ${ERROR_MESSAGE6}
     Wait Until Page Contains Element    xpath://list-errors//div//li[text()[contains(.,"username has already been taken")]]
     Element Text Should Be  xpath://list-errors//div//li[text()[contains(.,"username has already been taken")]]  ${ERROR_MESSAGE7}
+    Close Browser
 
 *** Keywords ***
 Scroll Page To View

@@ -59,7 +59,7 @@ Global Article Test
     Click Element   xpath://span[contains(text(), 'Read more')]
     Scroll Page To Location    0    2000
     Wait Until Page Contains Element    xpath://p[contains(text(), 'This is My First Comment')]
-
+    Close Browser
 *** Keywords ***
 Scroll Page To Location
     [Arguments]    ${x_location}    ${y_location}

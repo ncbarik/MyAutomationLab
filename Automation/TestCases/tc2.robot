@@ -41,6 +41,7 @@ New Account Creation with valid values
     Input Password  xpath://input[contains(@placeholder, 'Password')]  ${RAM_PASSWORD}    clear=True
     Element Should Be Enabled   xpath://button[contains(text(),'Sign up')]
     Click Element   xpath://button[contains(text(),'Sign up')]
+    Close Browser
 
 *** Keywords ***
 

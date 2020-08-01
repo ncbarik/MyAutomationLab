@@ -31,7 +31,6 @@ Register User
     ${res_body}=    convert to string   ${response.content}
     should contain  ${res_body} Operation completed successfully
 
-
 Log in
     Create Session  LogIn  ${BASE_URL}
     ${response}=    get request     LogIn    /api/users/login
