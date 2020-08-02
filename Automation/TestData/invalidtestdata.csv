@@ -1,0 +1,9 @@
+${username};${email};${password};${errormessage};
+${EMPTY};${EMPTY};${EMPTY};username can't be blank;
+${EMPTY};${EMPTY};${EMPTY};email can't be blank;
+${EMPTY};${EMPTY};${EMPTY};password can't be blank;
+${EMPTY};${EMPTY};${EMPTY};username is too short (minimum is 1 character);
+${EMPTY};${EMPTY};${EMPTY};username is too long (maximum is 20 characters);
+${EMPTY};$%$%$123-;password@rd123;username can't be blank;;
+$%$%$123-;${EMPTY};password@rd123;email can't be blank;
+$%$%$123-;$%$%$123-;${EMPTY};password can't be blank;
